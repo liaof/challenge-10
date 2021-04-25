@@ -117,12 +117,9 @@ const internQuestions = function(employeeRoster){
 
 managerQuestions().then(engineerQuestions).then(internQuestions)
 .then(employeeRoster=>{
-    console.log('creating html');
     return generateCard(employeeRoster);
     
 }).then(pageHTML =>{
-    console.log('created html');
-    console.log('copying html');
     return writeFile(pageHTML);
 }).then((writeFileReply)=>{
     console.log(writeFileReply);

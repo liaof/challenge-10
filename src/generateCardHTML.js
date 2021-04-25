@@ -2,15 +2,16 @@ function generateCard(employeeRoster){
     
   const n = employeeRoster.length;
   console.log("There are "+n+" employees");
-  var htmlText = '';
+  console.log(employeeRoster[0].getRole());
+  
 
   for (var i = 0; i<n;i++){
       //console.log(i);
       //if it's a manager
-      if(i==0){
+      if(employeeRoster[i].getRole()==='Manager'){
           const {name, id, email, office} = employeeRoster[0].getInfo();
           console.log(name, id, email, office);
-          htmlText+= `
+          return `
           <h2>Name: ${name}</h2>
           <h2>ID: ${id}</h2>
           <h2>Email: ${email}</h2>
@@ -18,18 +19,19 @@ function generateCard(employeeRoster){
           <h2>Role: ${employeeRoster[0].getRole()}
           `
       }
-      if(employeeRoster[0].getRole==='Engineer'){
+      if(employeeRoster[i].getRole()==='Engineer'){
         const {name, id, email, github} = employeeRoster[i].getInfo();
-        htmlText+= `
+        return `
         <h2>Name: ${name}</h2>
         <h2>ID: ${id}</h2>
         <h2>Email: ${email}</h2>
         <h2>Github: ${github}</h2>
+        <h2>Role: ${employeeRoster[i].getRole()}
         `
       }
       else{return;};
   };
-  return htmlText;
+  
 };
 
 module.exports = data =>{
