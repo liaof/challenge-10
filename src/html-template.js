@@ -6,11 +6,11 @@ function generateCard(employeeArr){
   
  
     return `
-        ${employeeArr.filter(({office})=>office)
+        ${employeeArr.filter(({office})=>office)//if manager
             .map(({name, id, email, office})=>{
                 return `
                 <div class = "card w-25 mx-auto my-50 py-30">
-                    <p>Name: ${name}</p
+                    <p>Name: ${name}</p>
                     <p>ID: ${id}</p>
                     <p><a href = 'mailto:${email}'>Email: ${email}</a></h2>
                     <p>Office: ${office}</p>
@@ -19,20 +19,20 @@ function generateCard(employeeArr){
                 `;
             })
         }
-        ${employeeArr.filter(({github})=>github)
+        ${employeeArr.filter(({github})=>github)//if engie
             .map(({name, id, email, github})=>{
                 return `
                 <div class = "card w-25 mx-auto my-50 py-30">
                     <p>Name: ${name}</p>
                     <p>ID: ${id}</p>
                     <p><a href = 'mailto:${email}'>Email: ${email}</a></h2>
-                    <p><a href = 'https://github.com/${github}'>Github: ${github}</p>
+                    <p><a href = 'https://github.com/${github}'>Github: ${github}</a></p>
                     <p>Role: Engineer</p>
                 </div>
                 `;
             })
         }
-        ${employeeArr.filter(({school})=>school)
+        ${employeeArr.filter(({school})=>school)//if intern
             .map(({name, id, email, school})=>{
                 return `
                 <div class = "card w-25 mx-auto my-50 py-30">
@@ -46,19 +46,6 @@ function generateCard(employeeArr){
         })
     }
     `;
-
-//    return `${employeeArr.filter(({})=>{})
-//        .map(({name, id, email})=>{
-//        return `
-//            <div>
-//                <h2>Name: ${name}</h2>
-//                <h2>ID: ${id}</h2>
-//                <h2>Email: ${email}</h2>
-//      
-//                <h2>Role: ${getRole()}</h2>
-//            </div>
-//        `
-//    })}`
 };
  
 

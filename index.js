@@ -3,7 +3,7 @@ const inquirer = require('inquirer');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
-const generateCard = require('./src/generateCardHTML');
+const generateCard = require('./src/html-template');
 const { writeFile, copyFile } = require('./utils/generateSite.js');
 var employeeRoster;
 
@@ -21,11 +21,27 @@ const managerQuestions = function(employeeRoster){
         },{ 
             type: 'input',
             name: 'id',
-            message: "Enter the team manager's employee ID"
+            message: "Enter the team manager's employee ID",
+            validate: input => {
+                if (!isNaN(input)) {
+                  return true;
+                } else {
+                  console.log('    Error: Please enter an ID number');
+                  return false;
+                }
+            }
         },{ 
             type: 'input',
             name: 'email',
-            message: "Enter the team manager's email address"
+            message: "Enter the team manager's email address",
+            validate: input => {
+                if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(input)){
+                    return true;
+                } else {
+                    console.log('   Error:Please enter a valid email address');
+                    return false;
+                }
+            }
         },{ 
             type: 'input',
             name: 'office',
@@ -52,7 +68,15 @@ const engineerQuestions = function(employeeRoster){
         },{ 
             type: 'input',
             name: 'id',
-            message: "Enter the engineer's employee ID"
+            message: "Enter the engineer's employee ID",
+            validate: input => {
+                if (!isNaN(input)) {
+                  return true;
+                } else {
+                console.log('    Error: Please enter an ID number');
+                  return false;
+                }
+            }
         },{ 
             type: 'input',
             name: 'email',
@@ -73,7 +97,7 @@ const engineerQuestions = function(employeeRoster){
         if(data.addAnother){
             return engineerQuestions(employeeRoster);
         } else {
-            return employeeRoster;
+            return menuQuestions(employeeRoster);
         }
     });
 };
@@ -87,7 +111,15 @@ const internQuestions = function(employeeRoster){
         },{ 
             type: 'input',
             name: 'id',
-            message: "Enter the intern's employee ID"
+            message: "Enter the intern's employee ID",
+            validate: input => {
+                if (!isNaN(input)) {
+                  return true;
+                } else {
+                  console.log('    Error: Please enter an ID number');
+                  return false;
+                }
+            }
         },{ 
             type: 'input',
             name: 'email',
@@ -108,14 +140,29 @@ const internQuestions = function(employeeRoster){
         if(data.addAnother){
             return internQuestions(employeeRoster);
         } else {
-            return employeeRoster;
+            return menuQuestions(employeeRoster);
         }
     });
 };
 
+const menuQuestions = function(employeeRoster){
+   
+    return inquirer.prompt({
+        type: 'checkbox',
+        name: 'next',
+        message: 'Which role would you like to enter next? Both choices to end the program and generate your html',
+        choices: ['Engineer','Intern'] 
+    }).then(data=>{
+        if (JSON.stringify(data)==='{"next":["Engineer"]}')return engineerQuestions(employeeRoster);
+        else if (JSON.stringify(data)==='{"next":["Intern"]}')  return internQuestions(employeeRoster) ;
+        else if (JSON.stringify(data)==='{"next":["Engineer","Intern"]}') return employeeRoster;
+        //no option was selected
+        else {console.log("Please select an option to proceed or both to terminate the program"); return menuQuestions(employeeRoster);}
+    })
+};
 
 
-managerQuestions().then(engineerQuestions).then(internQuestions)
+managerQuestions().then(menuQuestions)//.then(internQuestions)
 .then(employeeRoster=>{
     return generateCard(employeeRoster);
     

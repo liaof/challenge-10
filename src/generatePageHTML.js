@@ -1,1 +1,0 @@
-const generateCard = require('../src/generateCardHtml.js');
