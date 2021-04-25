@@ -45,7 +45,15 @@ const managerQuestions = function(employeeRoster){
         },{ 
             type: 'input',
             name: 'office',
-            message: "Enter the team manager's office number"
+            message: "Enter the team manager's office number",
+            validate: input => {
+                if (!isNaN(input)) {
+                  return true;
+                } else {
+                  console.log('    Error: Please enter an office number');
+                  return false;
+                }
+            }
         }
     ]).then(data =>{
         const manager = new Manager(data.name, data.id, data.email, data.office);
