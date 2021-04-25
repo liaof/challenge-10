@@ -4,43 +4,17 @@ function generateCard(employeeArr){
   console.log("There are "+n+" employees");
   console.log(employeeArr[0].getRole());
   
-  var cardHTML = ``;
- // for (var i = 0; i<n;i++){
- //     //console.log(i);
- //     //if it's a manager
- //     if(employeeArr[i].getRole()==='Manager'){
- //         const {name, id, email, office} = employeeArr[0].getInfo();
- //         console.log(name, id, email, office);
- //         cardHTML+= `
- //         <h2>Name: ${name}</h2>
- //         <h2>ID: ${id}</h2>
- //         <h2>Email: ${email}</h2>
- //         <h2>Office: ${office}</h2>
- //         <h2>Role: ${employeeArr[0].getRole()}</h2>
- //         `
- //     }
- //     if(employeeArr[i].getRole()==='Engineer'){
- //       const {name, id, email, github} = employeeArr[i].getInfo();
- //       cardHTML+= `
- //       <h2>Name: ${name}</h2>
- //       <h2>ID: ${id}</h2>
- //       <h2>Email: ${email}</h2>
- //       <h2>Github: ${github}</h2>
- //       <h2>Role: ${employeeArr[i].getRole()}</h2>
- //       `
- //     }
- //     else{return;};
-
+ 
     return `
         ${employeeArr.filter(({office})=>office)
             .map(({name, id, email, office})=>{
                 return `
-                <div>
-                    <h2>Name: ${name}</h2>
-                    <h2>ID: ${id}</h2>
-                    <h2>Email: ${email}</h2>
-                    <h2>Office: ${office}</h2>
-                    <h2>Role: Manager</h2>
+                <div class = "card w-25 mx-auto my-50 py-30">
+                    <p>Name: ${name}</p
+                    <p>ID: ${id}</p>
+                    <p><a href = 'mailto:${email}'>Email: ${email}</a></h2>
+                    <p>Office: ${office}</p>
+                    <p>Role: Manager</p>
                 </div>
                 `;
             })
@@ -48,12 +22,12 @@ function generateCard(employeeArr){
         ${employeeArr.filter(({github})=>github)
             .map(({name, id, email, github})=>{
                 return `
-                <div>
-                    <h2>Name: ${name}</h2>
-                    <h2>ID: ${id}</h2>
-                    <h2>Email: ${email}</h2>
-                    <h2>Github: ${github}</h2>
-                    <h2>Role: Engineer</h2>
+                <div class = "card w-25 mx-auto my-50 py-30">
+                    <p>Name: ${name}</p>
+                    <p>ID: ${id}</p>
+                    <p><a href = 'mailto:${email}'>Email: ${email}</a></h2>
+                    <p><a href = 'https://github.com/${github}'>Github: ${github}</p>
+                    <p>Role: Engineer</p>
                 </div>
                 `;
             })
@@ -61,12 +35,12 @@ function generateCard(employeeArr){
         ${employeeArr.filter(({school})=>school)
             .map(({name, id, email, school})=>{
                 return `
-                <div>
-                    <h2>Name: ${name}</h2>
-                    <h2>ID: ${id}</h2>
-                    <h2>Email: ${email}</h2>
-                    <h2>School: ${school}</h2>
-                    <h2>Role: Intern</h2>
+                <div class = "card w-25 mx-auto my-50 py-30">
+                    <p>Name: ${name}</p>
+                    <p>ID: ${id}</p>
+                    <p><a href = 'mailto:${email}'>Email: ${email}</a></h2>
+                    <p>School: ${school}</p>
+                    <p>Role: Intern</p>
                 </div>
             `;
         })
@@ -105,14 +79,17 @@ module.exports = data =>{
 
     <body>
     <header>
-      <div class="container flex-row justify-space-between align-center py-3">
-        <h1 class="page-title text-secondary bg-dark py-2 px-3"></h1>
-    
-        <div class = "card">
-        ${generateCard(data)}</div>
-      </div>
+        <div class="container flex-row justify-space-between align-center py-3">
+            <h1 class="page-title text-secondary bg-dark m-auto py-2 px-3">Team Roster</h1>
+        </div>
+
+        
     </header>
     <main class="container my-5">
+ 
+            <div class = "flex-row">
+                ${generateCard(data)}
+            </div>
 
     </main>
     <footer class="container text-center py-3">
