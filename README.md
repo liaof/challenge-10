@@ -1,8 +1,8 @@
 # Project 10
 
-# [Video Demo](https://www.youtube.com/watch?v=K_aj33LZYHc);
+## [Video Demo](https://www.youtube.com/watch?v=K_aj33LZYHc)
 
-# Description
+## Description
 
 In this project, I have created a script for node.js that takes  a list of employees and creates a webpage displaying all of their information and contact links. There are 3 different types of positions at the company, each with different pertinent information to be displayed. We can dictate how many engineer and intern positions to fill, but because leaders are by definition singular, the program assumes you have a single manager and does not leave the option to enter more currently.
 
@@ -21,6 +21,7 @@ Then we write the html to our dist/ folder before copying the stylesheet.
 
 ![Finished product](./htmlcomplete.jpg)
 
-#### Resources used:
+## Resources used:
 
 [This stackoverflow post](https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript)
+[w3resource](https://www.w3resource.com/javascript/form/email-validation.php)
