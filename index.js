@@ -34,7 +34,7 @@ const managerQuestions = function(employeeRoster){
     ]).then(data =>{
         const manager = new Manager(data.name, data.id, data.email, data.office);
         employeeRoster.push(manager);
-        console.log(employeeRoster[0].getRole());
+        //console.log(employeeRoster[0].getRole());
         return employeeRoster
     });
 };
