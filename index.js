@@ -1,5 +1,11 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
+const Manager = require('./lib/Manager');
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern');
+const generateCard = require('./src/generateCardHTML');
+const { writeFile, copyFile } = require('./utils/generateSite.js');
+var employeeRoster;
 
 const managerQuestions = function(employeeRoster){
 
@@ -25,9 +31,10 @@ const managerQuestions = function(employeeRoster){
             name: 'office',
             message: "Enter the team manager's office number"
         }
-    ]).then(managerData =>{
-        employeeRoster.push(managerData);
-        console.log(employeeRoster[0]);
+    ]).then(data =>{
+        const manager = new Manager(data.name, data.id, data.email, data.office);
+        employeeRoster.push(manager);
+        console.log(employeeRoster[0].getRole());
         return employeeRoster
     });
 };
@@ -61,7 +68,8 @@ const engineerQuestions = function(employeeRoster){
             default: false
         }
     ]).then(data =>{
-        employeeRoster.push(data);
+        const engineer = new Engineer (data.name, data.id, data.email, data.github);
+        employeeRoster.push(engineer);
         if(data.addAnother){
             return engineerQuestions(employeeRoster);
         } else {
@@ -70,7 +78,7 @@ const engineerQuestions = function(employeeRoster){
     });
 };
 
-const internQuestions = function(){
+const internQuestions = function(employeeRoster){
     return inquirer.prompt([
         { 
             type: 'input',
@@ -95,7 +103,8 @@ const internQuestions = function(){
             default: false
         }
     ]).then(data =>{
-        employeeRoster.push(data);
+        const intern = new Intern(data.name, data.id, data.email, data.school);
+        employeeRoster.push(intern);
         if(data.addAnother){
             return internQuestions(employeeRoster);
         } else {
@@ -106,4 +115,21 @@ const internQuestions = function(){
 
 
 
-managerQuestions().then(engineerQuestions).then(internQuestions);
+managerQuestions().then(engineerQuestions).then(internQuestions)
+.then(employeeRoster=>{
+    console.log('creating html');
+    return generateCard(employeeRoster);
+    
+}).then(pageHTML =>{
+    console.log('created html');
+    console.log('copying html');
+    return writeFile(pageHTML);
+}).then((writeFileReply)=>{
+    console.log(writeFileReply);
+    return copyFile();
+}).then((copyfileReply)=>{
+    console.log(copyfileReply);
+
+}).catch(err=>{
+    console.log(err);
+});
