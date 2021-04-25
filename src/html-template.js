@@ -2,9 +2,7 @@ function generateCard(employeeArr){
     
   const n = employeeArr.length;
   console.log("There are "+n+" employees");
-  console.log(employeeArr[0].getRole());
   
- 
     return `
         ${employeeArr.filter(({office})=>office)//if manager
             .map(({name, id, email, office})=>{
@@ -48,8 +46,6 @@ function generateCard(employeeArr){
     `;
 };
  
-
-
 module.exports = data =>{
 
     return `
